@@ -2,12 +2,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
 const path = require("path");
-
+const { DATABASE_URI } = require("./config.json");
 const app = express();
-let config;
-if (process.env.local) {
-  config = require("./config.json");
-}
 const { createPollGetController, createPollPostController, getAllPolls, viewPollGetController } = require("./controllers/pollController");
 // middleware
 app.use(morgan("dev"));
@@ -26,7 +22,7 @@ app.get("/", (req, res) => res.render("home"));
 
 // Database connection
 mongoose
-  .connect(process.env.DATABASE_URI || config?.DATABASE_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(DATABASE_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     // Starting main application after successfully connected to database
     app.listen(process.env.PORT || 5050, () => {
@@ -36,5 +32,3 @@ mongoose
   .catch((err) => {
     console.log(err);
   });
-
-module.exports = app;
