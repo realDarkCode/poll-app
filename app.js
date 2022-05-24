@@ -1,6 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
+const path = require("path");
+
 const app = express();
 let config;
 if (process.env.local) {
@@ -13,7 +15,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // Configuration
+app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
+// app.set("views", path.join(__dirname, "views"));
+// app.engine("html", require("ejs").renderFile);
+// app.set("view engine", "html");
 
 // Routes
 app.get("/create", createPollGetController);
