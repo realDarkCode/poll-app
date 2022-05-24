@@ -8,7 +8,7 @@ let config;
 if (process.env.local) {
   config = require("./config.json");
 }
-const { createPollGetController, createPollPostController, getAllPolls } = require("./controllers/pollController");
+const { createPollGetController, createPollPostController, getAllPolls, viewPollGetController } = require("./controllers/pollController");
 // middleware
 app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: true }));
@@ -17,13 +17,10 @@ app.use(express.json());
 // Configuration
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
-// app.set("views", path.join(__dirname, "views"));
-// app.engine("html", require("ejs").renderFile);
-// app.set("view engine", "html");
-
 // Routes
 app.get("/create", createPollGetController);
 app.post("/create", createPollPostController);
+app.get("/polls/:id", viewPollGetController);
 app.get("/polls", getAllPolls);
 app.get("/", (req, res) => res.render("home"));
 
