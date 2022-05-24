@@ -4,7 +4,13 @@ const morgan = require("morgan");
 const path = require("path");
 const { DATABASE_URI } = require("./config.json");
 const app = express();
-const { createPollGetController, createPollPostController, getAllPolls, viewPollGetController } = require("./controllers/pollController");
+const {
+  createPollGetController,
+  createPollPostController,
+  getAllPolls,
+  viewPollGetController,
+  viewPollPostController,
+} = require("./controllers/pollController");
 // middleware
 app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: true }));
@@ -17,6 +23,7 @@ app.set("view engine", "ejs");
 app.get("/create", createPollGetController);
 app.post("/create", createPollPostController);
 app.get("/polls/:id", viewPollGetController);
+app.post("/polls/:id", viewPollPostController);
 app.get("/polls", getAllPolls);
 app.get("/", (req, res) => res.render("home"));
 

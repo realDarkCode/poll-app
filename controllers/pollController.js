@@ -44,3 +44,26 @@ exports.viewPollGetController = async (req, res, next) => {
     console.log(error);
   }
 };
+exports.viewPollPostController = async (req, res, next) => {
+  const id = req.params.id;
+  const optionID = req.body.option;
+  try {
+    const poll = await Poll.findById(id);
+    let options = [...poll.options];
+    const index = options.findIndex((o) => o.id == optionID);
+
+    options[index].vote = options[index].vote + 1;
+
+    const totalVote = poll.totalVote + 1;
+
+    await Poll.findOneAndUpdate(
+      { _id: poll._id },
+      {
+        $set: { options, totalVote },
+      }
+    );
+    res.redirect(`/polls/${poll._id}`);
+  } catch (error) {
+    console.log(error);
+  }
+};
