@@ -23,8 +23,8 @@ mongoose
   .connect(process.env.DATABASE_URI || DATABASE_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     // Starting main application after successfully connected to database
-    app.listen(process.env.PORT || 5000, () => {
-      console.log(`Application ready on port ${process.env.PORT || 5000}`);
+    app.listen(process.env.PORT || 5050, () => {
+      console.log(`Application ready on port ${process.env.PORT || 5050}`);
     });
   })
   .catch((err) => {
