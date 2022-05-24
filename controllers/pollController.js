@@ -39,7 +39,16 @@ exports.viewPollGetController = async (req, res, next) => {
   const id = req.params.id;
   try {
     const poll = await Poll.findById(id);
-    res.render("viewPoll", { poll });
+    const options = [...poll.options];
+    let result = [];
+    options.forEach((option) => {
+      let percentage = (option.vote * 100) / poll.totalVote;
+      result.push({
+        ...option._doc,
+        percentage: percentage ? percentage.toFixed(2) : 0,
+      });
+    });
+    res.render("viewPoll", { poll, result });
   } catch (error) {
     console.log(error);
   }
