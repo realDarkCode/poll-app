@@ -9,9 +9,11 @@ app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// Routes
+// Configuration
+app.set("view engine", "ejs");
 
-app.get("/", (req, res) => res.json({ message: "You're on root route" }));
+// Routes
+app.get("/", (req, res) => res.render("home"));
 
 // Database connection
 mongoose
