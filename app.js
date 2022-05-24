@@ -20,7 +20,7 @@ app.get("/", (req, res) => res.render("home"));
 
 // Database connection
 mongoose
-  .connect(DATABASE_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(process.env.DATABASE_URI || DATABASE_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     // Starting main application after successfully connected to database
     app.listen(process.env.PORT || 5000, () => {
