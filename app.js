@@ -13,6 +13,7 @@ app.use(express.json());
 app.set("view engine", "ejs");
 
 // Routes
+app.get("/create", (req, res) => res.render("create"));
 app.get("/", (req, res) => res.render("home"));
 
 // Database connection
